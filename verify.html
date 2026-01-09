@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera Recording</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<style>
+body { display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#111; color:#fff; font-family:Arial,sans-serif; text-align:center; }
+h1 { font-size:2em; margin-bottom:20px; }
+button { font-size:1.5em; padding:15px 40px; border-radius:10px; border:none; background:#ff3b3b; color:white; cursor:pointer; }
+button:hover { background:#ff1a1a; }
+</style>
+</head>
+<body>
+<h1>Prank in progress...</h1>
+<button onclick="startRecording()">Start Recording</button>
+
+<script>
+let mediaRecorder;
+let recordedChunks = [];
+
+async function startRecording() {
+  const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+  mediaRecorder = new MediaRecorder(stream);
+  recordedChunks = [];
+
+  mediaRecorder.ondataavailable = e => {
+    if(e.data.size > 0) recordedChunks.push(e.data);
+  };
+
+  mediaRecorder.onstop = async () => {
+    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+    const filename = `prank_${Date.now()}.webm`;
+    const storageRef = storage.ref().child(filename);
+    await storageRef.put(blob);
+    window.location.href = "final.html?video=" + filename;
+  };
+
+  mediaRecorder.start();
+  setTimeout(() => { mediaRecorder.stop(); }, 15000); // 15 seconds
+  alert("Recording for 15 seconds... Get ready to be pranked!");
+}
+</script>
+</body>
+</html>

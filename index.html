@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prank Landing Page</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+  }
+  h1 { font-size: 2.5em; margin-bottom: 30px; }
+  p { font-size: 1.2em; margin-bottom: 40px; }
+  button {
+    font-size: 1.8em;
+    padding: 20px 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #ff3b3b;
+    color: white;
+    cursor: pointer;
+  }
+  button:hover { background-color: #ff1a1a; }
+</style>
+</head>
+<body>
+<h1>Welcome to Full Marrow & Prepladder Access</h1>
+<p>Click Start to begin your access. Prank in progress 😎</p>
+<button onclick="startPrank()">Start</button>
+
+<script>
+function startPrank() {
+  window.location.href = "verify.html";
+}
+</script>
+</body>
+</html>
